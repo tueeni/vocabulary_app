@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 import 'register_screen.dart';
 import 'login_screen.dart';
 import 'module_screen.dart';
 import 'create_module_screen.dart';  
 import 'auth_provider.dart';
+import 'search_modules_screen.dart';  // Импортируем экран поиска
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -39,9 +40,17 @@ class HomeScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CreateModuleScreen()), // Переход к созданию модуля
+                          MaterialPageRoute(builder: (context) => CreateModuleScreen()),
                         ),
                         child: Text('Создать новый модуль'),
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SearchModulesScreen()),
+                        ),
+                        child: Text('Поиск модулей'), // Кнопка для перехода к поиску модулей
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(

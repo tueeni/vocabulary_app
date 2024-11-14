@@ -179,3 +179,24 @@ def get_terms(module_id):
     terms_data = [{"term": term.term_name, "definition": term.definition} for term in terms]
 
     return jsonify(terms_data), 200
+
+@modules_bp.route('/search', methods=['GET'])
+@jwt_required()
+def search_modules():
+    query = request.args.get('query', '').strip()
+    if not query:
+        return jsonify({'error': 'Поисковый запрос не может быть пустым'}), 400
+    
+    print(f"Поиск по запросу: {query}") 
+    
+    try:
+        results = Module.query.filter(
+            (Module.title.ilike(f'%{query}%')) | 
+            (Module.description.ilike(f'%{query}%'))
+        ).all()
+        
+        modules_data = [{"id": module.id, "title": module.title, "description": module.description} for module in results]
+        return jsonify(modules_data), 200
+    except Exception as e:
+        print(f"Ошибка: {e}")  # Логирование ошибки
+        return jsonify({'error': str(e)}), 500
